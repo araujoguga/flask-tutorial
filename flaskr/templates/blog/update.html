@@ -10,10 +10,10 @@
     <input name="title" id="title" value="{{ request.form['title'] or post['title'] }}" required>
     <label for="body">Post</label>
     <textarea name="body" id="body">{{ request.form['body'] or post['body'] }}</textarea>
-    <input type="submit" value="Salvar">
+    <button>Salvar</button>
 </form>
 <hr>
 <form action="{{ url_for('blog.delete', id=post['id']) }}" method="post">
-    <input class="danger" type="submit" value="Deletar" onclick="return confirm('Você tem certeza?');">
+    <button class="danger" onclick="return confirm('Você tem certeza?');">Deletar</button>
 </form>
 {% endblock %}

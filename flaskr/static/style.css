@@ -135,3 +135,11 @@ input[type=submit] {
     align-self: start;
     min-width: 10em;
 }
+
+button {
+    width: fit-content;
+    padding: 0 15px;
+    align-self: start;
+    min-width: 10em;
+    margin-bottom: 10px;
+}

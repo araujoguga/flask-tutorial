@@ -1,0 +1,25 @@
+DROP DATABASE IF EXISTS flaskr;
+CREATE DATABASE flaskr;
+use flaskr;
+
+
+DROP TABLE IF EXISTS user;
+DROP TABLE IF EXISTS post;
+
+
+CREATE TABLE user (
+  id INTEGER PRIMARY KEY AUTO_INCREMENT,
+  username varchar(30) UNIQUE NOT NULL,
+  password varchar(120) NOT NULL
+);
+
+CREATE TABLE post (
+  id INTEGER PRIMARY KEY AUTO_INCREMENT,
+  author_id INTEGER NOT NULL,
+  created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP(),
+  title varchar(50) NOT NULL,
+  body  varchar(500) NOT NULL,
+  FOREIGN KEY (author_id) REFERENCES user (id)
+);
+
+

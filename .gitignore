@@ -17,6 +17,7 @@ build/
 .idea/
 docs/_build/
 .vscode
+flaskr/*bkp.py
 
 # Coverage reports
 htmlcov/

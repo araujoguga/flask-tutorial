@@ -15,7 +15,7 @@
             <h1>{{ post['title'] }}</h1>
             <div class="about">por {{ post['username'] }} em {{ post['created'].strftime('%Y-%m-%d') }}</div>
         </div>
-        {% if g.user['id'] == post['author_id'] %}
+        {% if g.user['id'] == post['author_id'] or g.user['adm'] %}
         <a class="action" href="{{ url_for('blog.update', id=post['id']) }}">Editar</a>
         {% endif %}
     </header>

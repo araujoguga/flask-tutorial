@@ -1,8 +1,7 @@
 DROP DATABASE IF EXISTS flaskr;
-
 CREATE DATABASE flaskr;
-
 use flaskr;
+
 
 CREATE TABLE user (
   id INTEGER PRIMARY KEY AUTO_INCREMENT,
@@ -17,31 +16,27 @@ CREATE TABLE post (
   author_id INTEGER NOT NULL,
   created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP(),
   title varchar(50) NOT NULL,
-  body varchar(500) NOT NULL,
+  body  varchar(500) NOT NULL,
   FOREIGN KEY (author_id) REFERENCES user (id)
 );
 
-select
-  *
-from
-  user
-  inner join post on user.id = author_id;
+select * from user inner join post on user.id = author_id;
 
-insert into
-  user(username, password)
-values
-  ('admin', 'admin');
 
-update
-  user
+insert into user(username, password)
+values('admin', 'admin');
+
+update user
 set
-  adm = true,
-  master = true,
-  password = 'pbkdf2:sha256:260000$L9JTgrtvFs5I9MTJ$0fa29e1310e626a00889dfb4bd18d8eabf4f9efed8e90b77c025276c3b4e8baf'
-where
-  user.username = 'admin';
+adm = true,
+master = true,
+password = 'pbkdf2:sha256:260000$L9JTgrtvFs5I9MTJ$0fa29e1310e626a00889dfb4bd18d8eabf4f9efed8e90b77c025276c3b4e8baf'
+where user.username='admin';
 
-select
-  *
-from
-  user;
+select * from user; 
+
+
+ SELECT u.username, u.admin
+ from user u
+WHERE u.username !='admin'
+ORDER BY id;

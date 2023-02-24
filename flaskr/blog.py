@@ -66,7 +66,10 @@ def get_post(id, check_author=True):
     if post is None:
         abort(404, f"Post id {id} não existe.")
 
-    if check_author and post['author_id'] != g.user['id']:
+    if g.user['adm'] == True:
+        return post
+
+    elif check_author and post['author_id'] != g.user['id']:
         abort(403)
 
     return post

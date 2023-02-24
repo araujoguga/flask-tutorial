@@ -99,3 +99,25 @@ def login_required(view):
         return view(**kwargs)
 
     return wrapped_view
+
+
+def adm_required(view):
+    @functools.wraps(view)
+    def wrapped_view(**kwargs):
+        if g.user['adm'] == 0:
+            return redirect(url_for('index'))
+
+        return view(**kwargs)
+
+    return wrapped_view
+
+
+def master_required(view):
+    @functools.wraps(view)
+    def wrapped_view(**kwargs):
+        if g.user['master'] == 0:
+            return redirect(url_for('index'))
+
+        return view(**kwargs)
+
+    return wrapped_view

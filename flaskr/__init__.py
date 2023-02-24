@@ -1,5 +1,6 @@
 from . import blog
 from . import auth
+from . import adm
 from flask import Flask
 
 
@@ -11,5 +12,7 @@ def create_app():
 
     app.register_blueprint(blog.bp)
     app.add_url_rule('/', endpoint='index')
+
+    app.register_blueprint(adm.bp)
 
     return app

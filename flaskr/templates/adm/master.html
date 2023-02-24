@@ -9,9 +9,10 @@
 <table style="width: 100%; text-align: center;">
     <thead>
         <tr>
-            <th style="width: 25%;">Usuário</th>
-            <th style="width: 25%;">Perfil</th>
-            <th style="width: 50%;">Permissão</th>
+            <th style="width: 20%;">Usuário</th>
+            <th style="width: 40%;">Perfil</th>
+            <th style="width: 20%;">Senha</th>
+            <th style="width: 20%;">Permissão</th>
         </tr>
     </thead>
     <tbody>
@@ -22,6 +23,10 @@
             </td>
             <td>
                 {{'Admin'if user['adm'] else 'Usuário'}}
+            </td>
+            <td>
+                <a href="{{url_for('adm.reset_password', id = user['id'])}}"
+                    onclick="return confirm('gostaria de resetar a senha?')"><button>Resetar</button></a>
             </td>
             <td>
                 <a href="{{url_for('adm.update', id = user['id'], profile = user['adm'])}}"><button>Alterar</button></a>

@@ -36,7 +36,12 @@ where user.username='admin';
 select * from user; 
 
 
- SELECT u.username, u.admin
- from user u
-WHERE u.username !='admin'
+SELECT username, adm
+from user 
+WHERE username !='admin'
 ORDER BY id;
+
+
+update user
+set user.adm = True
+where user.id = 3

@@ -4,6 +4,7 @@ from flask import (
 )
 from werkzeug.exceptions import abort
 from flaskr.auth import login_required, adm_required, master_required
+from werkzeug.security import check_password_hash, generate_password_hash
 from flaskr.database import get_cursor, close_cursor, commit
 
 
@@ -45,15 +46,33 @@ def master():
 
 
 @bp.route('master/update/<int:id>/<int:profile>')
+@login_required
+@master_required
 def update(id, profile):
     new_profile = False if profile else True
-    print(new_profile)
     db = get_cursor()
     db.execute(
         'update user '
         'set user.adm = %s '
         'where user.id = %s ',
         (new_profile, id)
+    )
+    commit()
+    close_cursor(db)
+
+    return redirect(url_for('.master'))
+
+
+@bp.route('master/reset_password/<int:id>')
+@login_required
+@master_required
+def reset_password(id):
+    db = get_cursor()
+    db.execute(
+        'update user '
+        'set user.password = %s '
+        'where user.id = %s ',
+        (generate_password_hash('padrao1'), id)
     )
     commit()
     close_cursor(db)

@@ -1,5 +1,5 @@
 from flask import (
-    Blueprint, flash, g, redirect, render_template, request, url_for
+    Blueprint, flash, g, redirect, render_template, request, url_for, jsonify
 )
 from werkzeug.exceptions import abort
 
@@ -113,3 +113,12 @@ def delete(id):
     commit()
     close_cursor(db)
     return redirect(url_for('blog.index'))
+
+
+@bp.route('/posts_json/user/<int:id>')
+def posts_json(id):
+    db = get_cursor()
+    db.execute('SELECT * FROM post WHERE author_id = %s', (id,))
+    posts = db.fetchall()
+    close_cursor(db)
+    return jsonify(posts)

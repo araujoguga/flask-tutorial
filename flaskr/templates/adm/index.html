@@ -9,11 +9,60 @@
 <article class="user">
     <header>
         <div>
-            <h1>{{ user['username'] }}</h1>
+            <h4 data-fetched="0" data-show="0" id="{{user['id']}}">{{ user['username'] }}</4>
+                <div name="posts{{user['id']}}"></div>
+        </div>
+
     </header>
 </article>
 {% if not loop.last %}
 <hr>
 {% endif %}
 {% endfor %}
+<script>
+    const BASE_URL = "http://127.0.0.1:5000";
+
+    document.querySelectorAll('h4').forEach(h => h.addEventListener("click", async (e) => {
+        let id = e.target.id;
+        let ds = e.target.dataset;
+        const resultDiv = document.querySelector(`[name = posts${id}]`);
+
+
+        if (parseInt(ds.fetched)) {
+
+            if (parseInt(ds.show)) {
+
+                resultDiv.style.display = 'none'
+                ds.show = 0
+
+            } else {
+
+                resultDiv.style.display = 'block'
+                ds.show = 1
+
+            }
+
+        } else {
+
+            ds.fetched = 1
+            ds.show = 1
+            let data = await fetch(BASE_URL + "/posts_json/user/" + id)
+            data = await data.json()
+            data.forEach((post) => {
+
+                resultDiv.innerHTML += `
+            <div>
+            <h5>${post.title}</h5>
+            <div class="about"> em ${post.created}</div>
+            <p class="body">${post.body}</p>
+            <a class="action" href="${BASE_URL}/${post.id}/update">Editar</a>
+            </div>
+            `
+            })
+
+        }
+
+    }))
+
+</script>
 {% endblock %}

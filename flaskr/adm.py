@@ -16,12 +16,20 @@ bp = Blueprint('adm', __name__, url_prefix='/adm')
 @adm_required
 def users():
     db = get_cursor()
-    db.execute(
-        'SELECT id, username, adm '
-        'from user '
-        "WHERE username !='admin' "
-        'ORDER BY id'
-    )
+    if g.user['username'] != 'admin':
+        db.execute(
+            'SELECT id, username, adm '
+            'from user '
+            "WHERE username !='admin' "
+            'ORDER BY id'
+        )
+    else:
+        db.execute(
+            'SELECT id, username, adm '
+            'from user '
+            'ORDER BY id'
+        )
+
     users = db.fetchall()
     close_cursor(db)
 

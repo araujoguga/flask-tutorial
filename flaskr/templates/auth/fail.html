@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block header %}
+<h1>Erro ao alterar senha. Tente novamente </h1>
+{% endblock %}
+
+{% block content %}
+
+<body>
+    <a href="{{url_for('auth.change_password')}}"><button>OK</button></a>
+</body>
+{% endblock %}

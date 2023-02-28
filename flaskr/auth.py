@@ -69,6 +69,51 @@ def login():
     return render_template('auth/login.html')
 
 
+@bp.route('/change_password', methods=['GET', 'POST'])
+def change_password():
+
+    if request.method == 'POST':
+        newpassword = request.form['newpassword']
+        cnewpassword = request.form['cnewpassword']
+        error = None
+
+        if newpassword != cnewpassword:
+            error = 'Senhas diferentes.'
+
+        if error is None:
+            try:
+                db = get_cursor()
+                db.execute(
+                    'update user '
+                    'set user.password = %s '
+                    'where user.id = %s ',
+                    (generate_password_hash(newpassword), g.user['id'])
+                )
+                commit()
+                close_cursor(db)
+
+                return redirect(url_for('auth.sucess'))
+
+            except error:
+                return redirect(url_for('auth.fail'))
+
+        flash(error)
+
+    return render_template('auth/change_password.html')
+
+
+@bp.route('/change_password/sucess')
+def sucess():
+
+    return render_template('auth/sucess.html')
+
+
+@bp.route('/change_password/fail')
+def fail():
+
+    return render_template('auth/fail.html')
+
+
 @bp.before_app_request
 def load_logged_in_user():
     user_id = session.get('user_id')

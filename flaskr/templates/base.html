@@ -12,6 +12,7 @@
       {% if g.user['adm']%}
     <li><a href="{{ url_for('adm.users') }}">Usuários</a>
       {% endif%}
+    <li><a href="{{ url_for('auth.change_password') }}">Alterar senha</a>
     <li><a href="{{ url_for('auth.logout') }}">Sair</a>
       {% else %}
     <li><a href="{{ url_for('auth.register') }}">Cadastrar</a>

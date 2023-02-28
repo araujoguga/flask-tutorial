@@ -44,4 +44,12 @@ ORDER BY id;
 
 update user
 set user.adm = True
-where user.id = 3
+where user.id = 3;
+
+SELECT user.id, user.username,
+user.adm, count(post.author_id) as posts
+from user left join post
+on  user.id = post.author_id
+GROUP BY user.id
+ORDER BY user.id;
+

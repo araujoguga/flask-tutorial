@@ -60,9 +60,20 @@ def login():
             error = 'Usuário ou senha incorretos.'
 
         if error is None:
-            session.clear()
-            session['user_id'] = user['id']
-            return redirect(url_for('index'))
+
+            if password == 'padrao1':
+
+                session.clear()
+                session['user_id'] = user['id']
+
+                return render_template('auth/change_pattern_password.html')
+
+            else:
+
+                session.clear()
+                session['user_id'] = user['id']
+
+                return redirect(url_for('index'))
 
         flash(error)
 

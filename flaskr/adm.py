@@ -18,16 +18,26 @@ def users():
     db = get_cursor()
     if g.user['username'] != 'admin':
         db.execute(
-            'SELECT id, username, adm '
-            'from user '
-            "WHERE username !='admin' "
-            'ORDER BY id'
+            """
+            SELECT user.id, user.username,
+            user.adm, count(post.author_id) as posts
+            from user left join post
+            on  user.id = post.author_id
+            WHERE username !='admin'
+            GROUP BY user.id
+            ORDER BY user.id;
+            """
         )
     else:
         db.execute(
-            'SELECT id, username, adm '
-            'from user '
-            'ORDER BY id'
+            """
+            SELECT user.id, user.username,
+            user.adm, count(post.author_id) as posts
+            from user left join post
+            on  user.id = post.author_id
+            GROUP BY user.id
+            ORDER BY user.id;
+            """
         )
 
     users = db.fetchall()
